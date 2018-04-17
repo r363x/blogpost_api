@@ -37,7 +37,7 @@ def get_posts():
     """Handler for GET requests"""
     # Check the sanity of GET requests. 400 Bad request
     if request.values or request.data:
-        return jsonify({'error': 'test'}), 400
+        return jsonify({'error': 'a GET request shouldn\'t contain query strings or body'}), 400
     # Get the db
     con = get_db()
     cur = con.cursor()
