@@ -39,12 +39,18 @@ def get_posts():
 
 @app.route('/post', methods=['POST'])
 def add_post():
-    con = get_db()
-    cur = con.cursor()
-    cur.execute('INSERT INTO posts(title, body) VALUES(?, ?)',
-            (request.json['title'], request.json['body']))
-    con.commit()
-    return jsonify({'success': 'true'}), 200
+    # Check the sanity of the request
+    if request.is_json and len(request.json) == 2 and 'title' in request.json and 'body' in request.json:
+        con = get_db()
+        cur = con.cursor()
+        cur.execute('INSERT INTO posts(title, body) VALUES(?, ?)',
+                (request.json['title'], request.json['body']))
+        con.commit()
+        return jsonify({'success': 'true'}), 200
+    else:
+        return jsonify(
+                {'success': 'false', 'message': 'request body should contain only \'title\' and \'body\''}
+                ), 400
 
 
 if __name__ == '__main__':
