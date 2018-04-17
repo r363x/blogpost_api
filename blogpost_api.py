@@ -2,6 +2,7 @@
 # Author: Sergey Papyan                                                                                                                      
                                                                                                                                              
 import sqlite3                                                                                                                               
+from sys import argv, exit
 from flask import Flask, request, jsonify, g
 
 dbfile = 'blog.db'
@@ -70,5 +71,8 @@ def add_post():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if(len(argv) != 2):
+        print('Usage:\nblogpost_api.py <port_num>')
+        exit(1)
+    app.run(port=int(argv[1]))
 
