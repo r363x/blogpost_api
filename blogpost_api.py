@@ -28,6 +28,15 @@ def not_found(error):
          'available urls': [{'/post': 'method \'POST\'', '/posts': 'method \'GET\''}]}
         ), 404
 
+@app.route('/posts', methods=['GET'])                                                                                                        
+def get_posts():                                                                                                                             
+    con = get_db()                                                                                                                           
+    cur = con.cursor()                                                                                                                       
+    query = cur.execute('SELECT * FROM posts')                                                                                               
+    response = make_response(jsonify({'posts': [{'id': x[0],                                                                                 
+        'title': x[1], 'body': x[2]} for x in query.fetchall()]}))                                                                           
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug=True)
