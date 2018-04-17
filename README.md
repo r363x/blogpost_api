@@ -9,4 +9,4 @@ Requirements
 Deployment
 ----------
 - pip install -r requirements.txt
-- for a test run the built-in Werkzeug http server will suffice './blogpost_api.py <port_num>'
+- for a test run the built-in Werkzeug http server will suffice './api.py <port_num>'
