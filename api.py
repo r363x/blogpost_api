@@ -54,13 +54,13 @@ def get_posts():
 def add_post():
     """Handler for POST requests"""
     # Check the sanity of POST requests. 400 Bad request
-    if request.is_json and len(request.json) == 2 and 'title' in request.json and 'body' in request.json:
+    if request.is_json and len(request.get_json()) == 2 and 'title' in request.get_json() and 'body' in request.get_json():
         # Get the DB
         con = get_db()
         cur = con.cursor()
         # Do the insert
         cur.execute('INSERT INTO posts(title, body) VALUES(?, ?)',
-                (request.json['title'], request.json['body']))
+                (request.get_json()['title'], request.get_json()['body']))
         # Commit the changes
         con.commit()
         return jsonify({'success': 'true'}), 200
